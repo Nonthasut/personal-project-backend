@@ -6,6 +6,11 @@ type: DataType.STRING
 target_value:{
     type:DataType.INTEGER
 }
+},{
+    timestamps : false
 })
+Target.associate = models => {
+    Target.belongsTo(models.User,{foreignKey: 'user_id'})
+}
 return Target
 } 

@@ -6,6 +6,11 @@ module.exports = (sequelize,DataType)=>{
         income_value:{
         type:DataType.INTEGER
         }
+    },{
+        timestamps : false
     })
+    Income.associate = models =>{
+        Income.belongsTo(models.User, {foreignKey:'user_id'})
+    }
     return Income
 }
