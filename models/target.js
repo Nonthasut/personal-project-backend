@@ -4,7 +4,7 @@ target_list:{
 type: DataType.STRING
 },
 target_value:{
-    type:DataType.INTEGER
+    type:DataType.BIGINT
 }
 },{
     timestamps : false

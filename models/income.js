@@ -4,7 +4,7 @@ module.exports = (sequelize,DataType)=>{
         type:DataType.STRING
         },
         income_value:{
-        type:DataType.INTEGER
+        type:DataType.BIGINT
         }
     },{
         timestamps : false

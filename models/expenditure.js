@@ -4,7 +4,7 @@ expenditure_list :{
     type: DataTypes.STRING
 },
 expenditure_value :{
-    type: DataTypes.INTEGER
+    type: DataTypes.BIGINT
 }
 },{
     timestamps : false
