@@ -8,7 +8,7 @@ const auth = passport.authenticate('jwt', { session: false })
 router.get('/', auth, controller.getAll)
 router.post('/', auth, controller.create)
 router.delete('/:id', auth, controller.deleteExpenditure)
-router.patch('/id',auth,controller.updateExpenditure)
+router.patch('/:id',auth,controller.updateExpenditure)
 router.get('/total',auth,controller.getSum)
 
 module.exports = router;

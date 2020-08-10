@@ -35,7 +35,6 @@ const updateIncomeList = async (req, res) => {
         res.status(404).send({ message: 'Not found list.' })
     } else if (income_list || income_value){
        await targetIncomeList.update({ income_list: income_list, income_value: +income_value })
-        console.log(targetIncomeList)
         res.status(200).send({ message: 'List already update.' })
     }
 }
