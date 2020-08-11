@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
     const { username, password, name, birthday, retired_time, rest_in_peace_time } = req.body
-    const targetUser = await db.User.findOne({ where: {username:username} })
+    const targetUser = await db.User.findOne({ where: { username: username } })
     if (targetUser) {
         res.status(400).send({ message: 'Username already taken' })
     } else {
@@ -26,28 +26,41 @@ const register = async (req, res) => {
 
 
 const login = async (req, res) => {
-    const { username, password, name, birthday, retired_time, rest_in_peace_time } = req.body
-    const targetUser = await db.User.findOne({where:{username:username}})
-    if(!targetUser){
-        res.status(400).send({message:'Username or password is wrong.'})
-    }else{
-        const isCorrectPassword = bcryptjs.compareSync(password,targetUser.password);
-        if(isCorrectPassword){
-        const payload = {
-            name: targetUser.name,
-            id: targetUser.id
-        }
-        const token = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn:3600})
+    const { username, password} = req.body
+    const targetUser = await db.User.findOne({ where: { username: username } })
+    if (!targetUser) {
+        res.status(400).send({ message: 'Username or password is wrong.' })
+    } else {
+        const isCorrectPassword = bcryptjs.compareSync(password, targetUser.password);
+        if (isCorrectPassword) {
+            const payload = {
+                name: targetUser.name,
+                id: targetUser.id
+            }
+            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: 3600 })
 
-        res.status(200).send({token:token,message:"Login successful!"})
-        }else{
-        res.status(400).send({message:'Username or password is wrong.'})
+            res.status(200).send({ token: token, message: "Login successful!" })
+        } else {
+            res.status(400).send({ message: 'Username or password is wrong.' })
         }
     }
- 
+
+}
+
+const editDate = async (req, res) => {
+    const targetId = Number(req.params.id)
+    const targetDateData = await db.User.findOne({ where: { id: targetId } })
+    const { name,birthday, retired_time, rest_in_peace_time } = req.body
+    if (!targetDateData) {
+        res.status(404).send({ message: 'Do not accept by incorrect method!' })
+    } else if (name||birthday||retired_time||rest_in_peace_time) {
+        await targetDateData.update({name:name, birthday: birthday, retired_time: retired_time, rest_in_peace_time: rest_in_peace_time })
+        res.status(200).send({ message: 'Update success.' })
+    }
 }
 
 module.exports = {
     register,
-    login
+    login,
+    editDate
 }
