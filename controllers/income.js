@@ -13,6 +13,7 @@ const create = async (req, res) => {
         income_value: req.body.income_value,
         user_id: req.user.id
     })
+    console.log(req.body.income_value)
     res.status(204).send(newIncomeList)
 }
 
@@ -34,7 +35,7 @@ const updateIncomeList = async (req, res) => {
     if (!targetIncomeList) {
         res.status(404).send({ message: 'Not found list.' })
     } else if (income_list || income_value){
-       await targetIncomeList.update({ income_list: income_list, income_value: +income_value })
+       await targetIncomeList.update({ income_list: income_list, income_value: Number(income_value) })
         res.status(200).send({ message: 'List already update.' })
     }
 }

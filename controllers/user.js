@@ -59,8 +59,16 @@ const editDate = async (req, res) => {
     }
 }
 
+
+const getUser = async (req,res)=>{
+    const targetId = Number(req.params.id)
+    const targetUserData = await db.User.findOne({where:{id: targetId}})
+    res.status(200).send(targetUserData)
+}
+
 module.exports = {
     register,
     login,
-    editDate
+    editDate,
+    getUser
 }

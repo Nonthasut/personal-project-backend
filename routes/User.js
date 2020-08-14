@@ -8,5 +8,6 @@ const auth = passport.authenticate('jwt',{session:false})
 router.post('/register',controller.register)
 router.post('/login',controller.login)
 router.patch('/:id',auth,controller.editDate)
+router.get('/:id' ,auth,controller.getUser)
 
 module.exports = router;
