@@ -5,7 +5,14 @@ module.exports = (sequelize,DataType)=>{
         },
         income_value:{
         type:DataType.BIGINT
+        },
+        income_quantity_per_month:{
+        type:DataType.FLOAT
+        },
+        income_value_per_time:{
+        type:DataType.BIGINT
         }
+
     },{
         timestamps : false
     })

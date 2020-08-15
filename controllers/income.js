@@ -10,10 +10,12 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
     const newIncomeList = await db.Income.create({
         income_list: req.body.income_list,
+        income_value_per_time: req.body.income_value_per_time,
+        income_quantity_per_month: req.body.income_quantity_per_month,
         income_value: req.body.income_value,
-        user_id: req.user.id
+        user_id: req.user.id,
+
     })
-    console.log(req.body.income_value)
     res.status(204).send(newIncomeList)
 }
 
@@ -31,11 +33,11 @@ const deleteIncomeList = async (req, res) => {
 const updateIncomeList = async (req, res) => {
     const targetId = Number(req.params.id);
     const targetIncomeList = await db.Income.findOne({ where: { id: targetId, user_id: req.user.id } });
-    const { income_list, income_value } = req.body
+    const { income_list, income_value,income_quantity_per_month,income_value_per_time } = req.body
     if (!targetIncomeList) {
         res.status(404).send({ message: 'Not found list.' })
-    } else if (income_list || income_value){
-       await targetIncomeList.update({ income_list: income_list, income_value: Number(income_value) })
+    } else if (income_list || income_value ||income_quantity_per_month ||income_value_per_time){
+       await targetIncomeList.update({ income_list: income_list, income_value: Number(income_value), income_quantity_per_month: Number(income_quantity_per_month) })
         res.status(200).send({ message: 'List already update.' })
     }
 }

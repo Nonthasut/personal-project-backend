@@ -3,13 +3,15 @@ const { sequelize, Sequelize } = require('../models')
 const Op = Sequelize.Op
 
 const getAll = async (req, res) => {
-    const allExpenditure = await db.Expenditure.findAll();
+    const allExpenditure = await db.Expenditure.findAll({ where: { user_id: req.user.id } });
     res.status(200).send(allExpenditure)
 }
 
 const create = async (req, res) => {
     const newExpenditure = await db.Expenditure.create({
         expenditure_list: req.body.expenditure_list,
+        expenditure_value_per_time:  req.body.expenditure_value_per_time,
+        expenditure_quantity_per_month: req.body.expenditure_quantity_per_month,
         expenditure_value: req.body.expenditure_value,
         user_id: req.user.id
     })
@@ -30,11 +32,11 @@ const deleteExpenditure = async (req, res) => {
 const updateExpenditure = async (req, res) => {
     const targetId = Number(req.params.id);
     const targetExpenditureList = await db.Expenditure.findOne({ where: { id: targetId, user_id: req.user.id } })
-    const { expenditure_list, expenditure_value } = req.body
+    const { expenditure_list, expenditure_value,expenditure_quantity_per_month,  expenditure_value_per_time } = req.body
     if (!targetExpenditureList) {
         res.status(404).send({ message: 'Not found list' })
-    } else if (expenditure_list || expenditure_value) {
-        await targetExpenditureList.update({ expenditure_list: expenditure_list, expenditure_value: expenditure_value })
+    } else if (expenditure_list || expenditure_value || expenditure_quantity_per_month|| expenditure_value_per_time) {
+        await targetExpenditureList.update({ expenditure_list: expenditure_list, expenditure_value: expenditure_value,expenditure_quantity_per_month:expenditure_quantity_per_month,  expenditure_value_per_time:  expenditure_value_per_time })
         res.status(200).send({ message: 'List already update' })
     }
 }
