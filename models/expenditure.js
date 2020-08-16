@@ -4,13 +4,16 @@ module.exports = (sequelize, DataType) => {
             type: DataType.STRING
         },
         expenditure_value: {
-            type: DataType.BIGINT
+            type: DataType.BIGINT,
+            defaultValue:0
         },
         expenditure_quantity_per_month: {
-            type: DataType.FLOAT
+            type: DataType.FLOAT,
+            defaultValue:0
         },
         expenditure_value_per_time:{
-            type:DataType.BIGINT
+            type:DataType.BIGINT,
+            defaultValue:0
             }
     }, {
         timestamps: false
